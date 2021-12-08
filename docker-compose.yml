@@ -15,12 +15,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80;https://+:443;
       - ASPNETCORE_HTTPS_PORT=5001
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=gzDTu8wMh9XL9Au
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev_cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Jv84vLfS6eSpBzi
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/dev-cert.pfx
     depends_on:
       - db
-    volumes:
-      - ./https/:/https/
   db:
     container_name: QS-SmartBand-Database
     image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
