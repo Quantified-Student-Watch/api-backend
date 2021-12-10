@@ -6,7 +6,7 @@ namespace API.Models
     {
         public Guid Id { get; set; }
 
-        public SmartBand SmartBand { get; set; }
+        public Device Device { get; set; }
 
         public User User { get; set; }
 

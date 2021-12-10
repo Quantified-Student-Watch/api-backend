@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace API.Models
 {
-    public class SmartBand
+    public class Device
     {
         public Guid Id { get; set; }
 
@@ -11,6 +11,6 @@ namespace API.Models
         
         public string ProductNumber { get; set; }
 
-        public List<DataPointType> AcceptedDataPointTypes { get; set; }
+        public List<DataPointType> SupportedTypes { get; set; }
     }
 }
