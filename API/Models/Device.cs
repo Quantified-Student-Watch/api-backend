@@ -11,6 +11,6 @@ namespace API.Models
         
         public string ProductNumber { get; set; }
 
-        public List<DataPointType> SupportedTypes { get; set; }
+        // public List<DataPointType> SupportedTypes { get; set; }
     }
 }
