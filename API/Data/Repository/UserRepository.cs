@@ -4,26 +4,42 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data.Repository
 {
     interface IUserRepository
     {
         public Task<User> GetUserAsync(Guid id);
+
+        public User CreatUser(string name, string email);
     }
     
     
     public class UserRepository: IUserRepository
     {
-        private DbSet<User> _users;
-        public UserRepository(IQsContext context)
+        private QsContext _context;
+        public UserRepository(QsContext context)
         {
-            _users = context.Users;
+            _context = context;
         }
 
         public Task<User> GetUserAsync(Guid id)
         {
-            return _users.Where(x => x.Id == id).FirstAsync();
+            return _context.Users.Where(x => x.Id == id).FirstAsync();
+        }
+
+        public User CreatUser(string name, string email)
+        {
+            EntityEntry<User> user =  _context.Add(new User()
+            {
+                Name = name,
+                Email = email
+            });
+
+            _context.SaveChanges();
+
+            return user.Entity;
         }
     }
 }
