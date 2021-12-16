@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data.Repository
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         public Task<User> GetUserAsync(Guid id);
 
