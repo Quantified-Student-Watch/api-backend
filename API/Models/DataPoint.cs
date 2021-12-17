@@ -8,8 +8,6 @@ namespace API.Models
 
         public Device Device { get; set; }
 
-        public User User { get; set; }
-
         public DataPointType Type { get; set; }
 
         public string Value { get; set; }

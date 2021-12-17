@@ -9,10 +9,9 @@ namespace API.Data.Repository
 {
     interface IDataPointRepository
     {
-        public Task<List<DataPoint>> GetAllDataPointsFromUserAsync(User user);
-        public Task<List<DataPoint>> GetAllDataPointsFromUserAndDeviceAsync(User user, Device device);
+        public Task<List<DataPoint>> GetAllDataPointsFromDeviceAsync(Device device);
 
-        public DataPoint CreateDataPoint(User user, Device device, DataPointType dataPointType,string value);
+        public DataPoint CreateDataPoint(Device device, DataPointType dataPointType,string value);
     }
     
     
@@ -24,23 +23,16 @@ namespace API.Data.Repository
             _context = context;
         }
 
-        public Task<List<DataPoint>> GetAllDataPointsFromUserAsync(User user)
-        {
-            return  _context.DataPoints.Where(x => x.User.Id == user.Id).ToListAsync();
-        }
-
-        public Task<List<DataPoint>> GetAllDataPointsFromUserAndDeviceAsync(User user, Device device)
+        public Task<List<DataPoint>> GetAllDataPointsFromDeviceAsync(Device device)
         {
             return _context.DataPoints
-                .Where(x => x.Device.Id == device.Id)
-                .Where(x => x.User.Id == user.Id).ToListAsync();
+                .Where(x => x.Device.Id == device.Id).ToListAsync();
         }
 
-        public DataPoint CreateDataPoint(User user, Device device, DataPointType dataPointType, string value)
+        public DataPoint CreateDataPoint(Device device, DataPointType dataPointType, string value)
         {
             DataPoint dataPoint = new DataPoint()
             {
-                User = user,
                 Device = device,
                 Type = dataPointType,
                 Value = value

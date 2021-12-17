@@ -1,13 +1,16 @@
-﻿using API.Models;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data.Repository
 {
-    interface IDeviceRepository
+    public interface IDeviceRepository
     {
-        public Device GetDevice(string id);
-        public Device CreateDevice(string name, string productNumber);
+        public Task<Device> GetDeviceAsync(Guid id);
+        public Device CreateDevice(User user, string name, string productNumber);
     }
     
     
@@ -20,17 +23,18 @@ namespace API.Data.Repository
             _context = context;
         }
 
-        public Device GetDevice(string id)
+        public async Task<Device> GetDeviceAsync(Guid id)
         {
-            return _devices.Find(id);
+            return await _context.Devices.Where(x => x.Id == id).FirstAsync();
         }
 
-        public Device CreateDevice(string name, string productNumber)
+        public Device CreateDevice(User user, string name, string productNumber)
         {
             Device device = new Device()
             {
                 Name = name,
-                ProductNumber = productNumber
+                ProductNumber = productNumber,
+                User = user
             };
 
             EntityEntry<Device> result = _context.Add(device);

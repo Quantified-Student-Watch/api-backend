@@ -11,30 +11,33 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("user/")]
-    public class UserController
+    [Route("device/")]
+    public class DeviceController
     {
+        private IDeviceService _deviceService;
         private IUserService _userService;
-        public UserController(IUserService userService)
+        public DeviceController(IDeviceService deviceService, IUserService userService)
         {
+            _deviceService = deviceService;
             _userService = userService;
         }
         
         
         
         [HttpGet("{id}")]
-        public async Task<User> GetUser(Guid id)
+        public async Task<Device> GetDevice(Guid id)
         {
-            return await _userService.GetUserByIdAsync(id);
+            return await _deviceService.GetDevice(id);
         }
         
         
         [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public User CreateUser([FromBody] NewUser user)
+        public async Task<Device> CreateDevice([FromBody] NewDevice newDevice)
         {
-            return _userService.CreateUser(user.name, user.email);
+            User user = await _userService.GetUserByIdAsync(Guid.Parse(newDevice.userId));
+            return _deviceService.CreateDevice(user, newDevice.name, newDevice.productName);
         }
 
 
