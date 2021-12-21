@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data.Repository
 {
-    interface IDataPointRepository
+    public interface IDataPointRepository
     {
         public Task<List<DataPoint>> GetAllDataPointsFromDeviceAsync(Device device);
 
@@ -17,7 +17,7 @@ namespace API.Data.Repository
     
     public class DataPointRepository: IDataPointRepository
     {
-        private QsContext _context;
+        private readonly QsContext _context;
         public DataPointRepository(QsContext context)
         {
             _context = context;
